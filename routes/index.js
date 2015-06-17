@@ -7,10 +7,14 @@ var quizController = require('../controllers/quiz_controller');
 router.get('/', function(req, res) {
   res.render('index', { title: 'Quiz' });
 });
-// COMPLETAR PARA QUE SIRVA LA PÁG views/author.ejs  
+
+// PÁG views/author.ejs  
 router.get('/author', function (req,res) {
 	res.render('author', { autor: 'Juan C. Martinez' });
 });
+
+// Autoload de comandos con :quizId
+router.param('quizId', quizController.load);  // autoload :quizId
 
 // Definición de rutas de /quizes
 router.get('/quizes',                      quizController.index);
