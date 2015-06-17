@@ -12,6 +12,8 @@ exports.load = function(req, res, next, quizId) {
   ).catch(function(error) { next(error);});
 };
 
+// INCLUIR EL FILTRO DE BÚSQUEDA SI RUTA INCLUYE search
+
 // GET /quizes
 exports.index = function(req, res) {
   models.Quiz.findAll().then(function(quizes) {
