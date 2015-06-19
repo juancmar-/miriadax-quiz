@@ -13,10 +13,13 @@ router.get('/author', function (req,res) {
 	res.render('author', { autor: 'Juan C. Martinez' });
 });
 
+/*
 // PÁG buscar preguntas
 router.get('/buscar', function (req,res) {
 	res.render('buscar', { autor: 'Juan C. Martinez' });
 });
+*/
+
 // Autoload de comandos con :quizId
 router.param('quizId', quizController.load);  // autoload :quizId
 

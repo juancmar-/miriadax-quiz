@@ -16,10 +16,22 @@ exports.load = function(req, res, next, quizId) {
 
 // GET /quizes
 exports.index = function(req, res) {
-  models.Quiz.findAll().then(function(quizes) {
-    res.render('quizes/index.ejs', { quizes: quizes});
-  }).catch(function(error) { next(error);})
+	// SI HAY QUERY DEVOLVER SÓLO LAS QUE COINCIDAN
+	if (req.query.search) {
+		busqueda = "%" + req.query.search + "%";
+		busqueda = busqueda.replace(/\s/g,"%");
+		models.Quiz.findAll({where: ["pregunta like ?", busqueda],order: 'pregunta ASC'}).then(function(quizes) {
+			res.render('quizes/index.ejs', { quizes: quizes });
+		}).catch(function(error) {next(error);})
+	}
+	else {
+	// SI NO DEVOLVER TODAS LAS PREGUNTAS
+		models.Quiz.findAll().then(function(quizes) {
+		res.render('quizes/index.ejs', { quizes: quizes});
+		}).catch(function(error) { next(error);})
+	}
 };
+
 
 // GET /quizes/:id
 exports.show = function (req, res) {
