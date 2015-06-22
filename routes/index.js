@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
 
 // PÁG views/author.ejs  
 router.get('/author', function (req,res) {
-	res.render('author', { autor: 'Juan C. Martinez' });
+	res.render('author', { autor: 'Juan C. Martinez', errors: [] });
 });
 
 /*
