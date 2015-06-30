@@ -9,7 +9,6 @@ var methodOverride = require("method-override");
 var session = require("express-session");
 
 var routes = require('./routes/index');
-// var users = require('./routes/users');
 
 var app = express();
 
@@ -27,6 +26,19 @@ app.use(cookieParser('Quiz-2015'));
 app.use(session());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
+
+// AUTOLOGOUT basándose en el tiempo de inactividad
+app.use(function(req, res, next) {
+	if (req.session.user) {
+		if (Date.now() - req.session.user.ultAct > 10000) {
+			delete req.session.user;
+			res.send("<html><head><script>alert('Su sesión ha caducado')</script><meta http-equiv='refresh' content='0; url='/'></head></html>");
+		} else {
+			req.session.user.ultAct = Date.now();
+		}
+	}
+	next();
+});
 
 // Helpers dinámicos
 app.use(function(req, res, next) {
